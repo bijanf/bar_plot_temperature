@@ -1,5 +1,7 @@
 # Country Temperature Anomaly Visualizer
 
+![Temperature Anomalies Visualization](combined_figure_Germany.png)
+
 This Python script visualizes the temperature anomalies of various countries over time, comparing historical data with recent trends. It uses data from the Berkeley Earth temperature dataset, plotting both positive and negative temperature anomalies to highlight changes in the climate.
 
 ## Features
