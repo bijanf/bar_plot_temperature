@@ -33,3 +33,7 @@ To visualize the temperature anomalies for a specific country, run the script wi
 ```python
 plot_country_temperature_anomalies('Country Name')
 ```
+Replace 'Country Name' with the name of the country you want to analyze. For example:
+```python
+plot_country_temperature_anomalies('Germany')
+```
