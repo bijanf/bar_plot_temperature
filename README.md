@@ -37,3 +37,19 @@ Replace 'Country Name' with the name of the country you want to analyze. For exa
 ```python
 plot_country_temperature_anomalies('Germany')
 ```
+This will generate an image file named combined_figure_Country Name.png in your current working directory.
+
+## Customizing the Visualization
+
+The script includes a function to create a custom colormap for the visualization. You can modify the negative_colors_hex list within the create_custom_colormap function to change the color scheme for negative temperature anomalies.
+
+## Data Source
+
+The temperature data used in this visualization is sourced from Berkeley Earth and is subject to their terms and usage policies. Please ensure compliance with their data usage guidelines.
+
+## License
+This project is open-source and available under the MIT License. See the LICENSE file for more details.
+
+
+
+
