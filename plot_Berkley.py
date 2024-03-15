@@ -49,27 +49,28 @@ def save_colorbar_only(custom_cmap, vmin, vmax, label):
     # Remove the colorbar's border
     cbar.outline.set_edgecolor('none')
     # Save the colorbar figure
-    plt.savefig('colorbar.png', dpi=300, bbox_inches='tight')
+    plt.savefig('colorbar.png', dpi=300, bbox_inches='tight', transparent=True)
     plt.close(fig)
 
 def merge_images(plot_image_path, colorbar_image_path, output_path):
     # Open the plot and colorbar images
-    plot_image = Image.open(plot_image_path)
-    colorbar_image = Image.open(colorbar_image_path)
+    plot_image = Image.open(plot_image_path).convert("RGBA")
+    colorbar_image = Image.open(colorbar_image_path).convert("RGBA")
 
     # Calculate the total width and max height
     total_width = plot_image.width + colorbar_image.width
     max_height = max(plot_image.height, colorbar_image.height)
 
-    # Create a new blank image with the correct size
-    combined_image = Image.new('RGB', (total_width, max_height), (255, 255, 255))
+    # Create a new blank image with the correct size and a transparent background
+    combined_image = Image.new('RGBA', (total_width, max_height), (255, 255, 255, 0))
 
     # Paste the images into the combined image
-    combined_image.paste(plot_image, (0, 0))
-    combined_image.paste(colorbar_image, (plot_image.width, 0))
+    combined_image.paste(plot_image, (0, 0), plot_image)
+    combined_image.paste(colorbar_image, (plot_image.width, 0), colorbar_image)
 
-    # Save the combined image
-    combined_image.save(output_path)
+    # Save the combined image with a transparent background
+    combined_image.save(output_path, format='PNG')
+
 
 
 def plot_country_temperature_anomalies(country_name):
@@ -181,7 +182,7 @@ def plot_country_temperature_anomalies(country_name):
     plt.subplots_adjust(bottom=0.2,left=0.15, right=0.85)
     plt.xlim(1870, 2023)
     # Save the figure
-    plt.savefig('temperature_anomalies_' + country_name + '.png', dpi=300, bbox_inches='tight')
+    plt.savefig('temperature_anomalies_' + country_name + '.png', dpi=300, bbox_inches='tight', transparent=True)
     plt.close()
     # Now save the colorbar in a separate figure
     save_colorbar_only(custom_cmap, vmin=-2.5, vmax=2.5, label='Temperature Anomaly (°C)')
@@ -189,7 +190,7 @@ def plot_country_temperature_anomalies(country_name):
     merge_images('temperature_anomalies_' + country_name + '.png', 'colorbar.png', 'combined_figure_' + country_name + '.png')
 # how to run it :
 
-plot_country_temperature_anomalies('Kazakhstan')
+plot_country_temperature_anomalies('Germany')
 #plot_country_temperature_anomalies('Turkmenistan')
 #plot_country_temperature_anomalies('Uzbekistan')
 #plot_country_temperature_anomalies('Tajikistan')
