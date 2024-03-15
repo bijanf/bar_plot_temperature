@@ -144,8 +144,9 @@ def plot_country_temperature_anomalies(country_name):
     ax_neg.bar(neg_data['Year'], neg_data['Annual Anomaly'], color=custom_cmap(norm(neg_data['Annual Anomaly'])), width=1)
 	# Adjust the position of the colorbar
     # Add the anomaly difference as text to the plot
-    fig.text(0.2, 0.8, f'1994-2023 vs. 1871-1900 : ', fontsize=13)
-    fig.text(0.41, 0.796, f'+{anomaly_difference:.2f}°C', fontsize=25)
+    #fig.text(0.2, 0.8, f'1994-2023 vs. 1871-1900 : ', fontsize=13)
+    anomaly_text = f'+{anomaly_difference:.2f}°C'
+    #fig.text(0.41, 0.796, f'+{anomaly_difference:.2f}°C', fontsize=25)
     sm = ScalarMappable(cmap=custom_cmap, norm=norm)
     plt.subplots_adjust(right=0.85)
     # Normalize the data for color mapping and create the colorbar
@@ -188,6 +189,10 @@ def plot_country_temperature_anomalies(country_name):
     save_colorbar_only(custom_cmap, vmin=-2.5, vmax=2.5, label='Temperature Anomaly (°C)')
 
     merge_images('temperature_anomalies_' + country_name + '.png', 'colorbar.png', 'combined_figure_' + country_name + '.png')
+    # Save the anomaly difference to an external text file
+    filename = f'anomaly_difference_{country_name}.txt'
+    with open(filename, 'w') as file:
+        file.write(f'1994-2023 vs. 1871-1900 anomaly difference for {country_name}: {anomaly_text}\n')
 # how to run it :
 
 plot_country_temperature_anomalies('Germany')
